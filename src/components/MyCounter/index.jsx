@@ -10,10 +10,8 @@ function MyCounter(props) {
   const [maxStep, setMaxStep] = useState(100);
   const [inpValue, setInpValue] = useState(1);
   const [isAutoClick, setIsAutoClick] = useState(false);
-  const [isAutoMode, setIsAutoMode] = useState(false);
   const [delay, setDelay] = useState(1000);
-  const [minDelay, setMinDelay] = useState(500);
-  const [maxDelay, setMaxDelay] = useState(10000);
+  const [clicksPerSecond, setClicksPerSecond] = useState(1);
 
   const handleChangeMode = () => {
     setIsIncrement(!isIncrement);
@@ -25,7 +23,7 @@ function MyCounter(props) {
 
   const changeStep = ({ target: { value } }) => {
     if (value <= 100 || value == 1) {
-      isIncrement ? setStep(step + 1) : setStep(step - 1 || 1);
+      isIncrement ? setStep(step + 1) : setStep(step - 1);
       setStep(+value || 1);
       setInpValue(value);
     }
@@ -33,14 +31,21 @@ function MyCounter(props) {
       setInpValue(1);
     }
   };
+
   const autoClick = () => {
     setIsAutoClick(!isAutoClick);
   };
-  const changeDelay = ({ target, target: { value } }) => {
-    target.value = value;
-    setDelay(+value);
+  //==============================????
+  const changeDelay = (event) => {
+    const {
+      target: { value },
+    } = event;
+    if (event.charCode === 13) {
+      setDelay(1000 / clicksPerSecond);
+      setClicksPerSecond(value);
+    }
   };
-
+  //==============================????
   useEffect(() => {
     let id = null;
     if (isAutoClick) {
@@ -61,13 +66,19 @@ function MyCounter(props) {
         onChange={changeStep}
         value={inpValue}
       />
-      <Button handler={countHandler} caption={" add counter"} />
+      <div>
+        <input
+          type="number"
+          onKeyPress={changeDelay}
+          placeholder="clicks for second"
+        />
+      </div>
+      <Button handler={countHandler} caption={"Добавить к счетчику"} />
       <Button
         handler={handleChangeMode}
         caption={!isIncrement ? "decrement" : "increment "}
       />
       <Button handler={autoClick} caption="AutoClick" />
-      <input type="number" onKeyPress={changeDelay} />
     </div>
   );
 }

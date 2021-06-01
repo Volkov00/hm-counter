@@ -1,5 +1,5 @@
 .container {
-  width: 200px;
+  width: 313px;
   text-align: center;
   margin: 0 auto;
   border: 1px solid black;
@@ -16,5 +16,12 @@
     color: white;
     cursor: pointer;
     padding: 5px 35px;
+    &:hover {
+      background-color: #1b581daf;
+    }
   }
+}
+input {
+  width: 200px;
+  text-align: center;
 }
