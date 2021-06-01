@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 function Button(props) {
   const { caption, handler } = props;
   return (
@@ -9,7 +10,7 @@ function Button(props) {
 }
 export default Button;
 
-// Button.propTypes = {
-//   caption: PropTypes.string.isRequired,
-//   handler: PropTypes.func.isRequired,
-// };
+Button.propTypes = {
+  caption: PropTypes.string.isRequired,
+  handler: PropTypes.func.isRequired,
+};
